@@ -1,10 +1,9 @@
 #include "serial.hpp"
 #include "parallel.hpp"
-#include "../utils.hpp"
-
-#include "benchmark/benchmark.h"
-
+#include <benchmark/benchmark.h>
 #include <algorithm>
+#include <random>
+#include <type_traits>
 #include <vector>
 
 #if __has_include(<execution>)
@@ -14,6 +13,18 @@
 #ifdef HAS_STD_EXECUTION
 #include <execution>
 #endif
+
+template<class Containter, typename... Params>
+void randomize(Containter& c, Params... params)
+{
+	using T = typename Containter::value_type;
+	
+	std::mt19937 gen;
+	std::conditional_t<std::is_integral_v<T>,
+		std::uniform_int_distribution<T>,
+		std::uniform_real_distribution<T>> dis{static_cast<T>(params)...};
+	std::generate(c.begin(), c.end(), [&]() { return dis(gen); });
+}
 
 template<class Rand_access_it>
 void std_stable_sort_seq(Rand_access_it first, Rand_access_it last)
@@ -29,20 +40,21 @@ void std_stable_sort_par(Rand_access_it first, Rand_access_it last)
 }
 #endif
 
-#define MY_BM(func)										\
-template<typename T>									\
-void func(benchmark::State &state)						\
-{														\
-	std::vector<T> vec(state.range(0));					\
-	for (auto _ : state)								\
-	{													\
-		state.PauseTiming();							\
-		randomize(vec);									\
-		state.ResumeTiming();							\
-		func(vec.begin(), vec.end());					\
-		benchmark::DoNotOptimize(vec);					\
-	}													\
-	state.SetComplexityN(state.range(0));				\
+#define MY_BM(func)															\
+template<typename T>														\
+void func(benchmark::State &state)											\
+{																			\
+	std::vector<T> vec(state.range(0));										\
+	for (auto _ : state)													\
+	{																		\
+		state.PauseTiming();												\
+		randomize(vec);														\
+		state.ResumeTiming();												\
+		func(vec.begin(), vec.end());										\
+		benchmark::DoNotOptimize(vec);										\
+	}																		\
+	state.SetItemsProcessed((int64_t)state.range(0) * state.iterations());	\
+	state.SetComplexityN(state.range(0));									\
 }
 
 MY_BM(std_stable_sort_seq)
