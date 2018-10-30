@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <cstddef>
 #include <functional>
-#include <iostream>
 #include <random>
 #include <type_traits>
 #include <vector>

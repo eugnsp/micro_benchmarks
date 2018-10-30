@@ -58,23 +58,23 @@ void func(benchmark::State &state)											\
 }
 
 MY_BM(std_stable_sort_seq)
-BENCHMARK_TEMPLATE(std_stable_sort_seq, int)->Range(1L << 10, 1L << 24)->Complexity();
+BENCHMARK_TEMPLATE(std_stable_sort_seq, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 #ifdef HAS_STD_EXECUTION
 MY_BM(std_stable_sort_par)
-BENCHMARK_TEMPLATE(std_stable_sort_par, int)->Range(1L << 10, 1L << 24)->Complexity();
+BENCHMARK_TEMPLATE(std_stable_sort_par, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 #endif
 
 MY_BM(std_serial_merge_sort)
-BENCHMARK_TEMPLATE(std_serial_merge_sort, int)->Range(1L << 10, 1L << 24)->Complexity();
+BENCHMARK_TEMPLATE(std_serial_merge_sort, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 MY_BM(serial_merge_sort)
-BENCHMARK_TEMPLATE(serial_merge_sort, int)->Range(1L << 10, 1L << 24)->Complexity();
+BENCHMARK_TEMPLATE(serial_merge_sort, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 MY_BM(serial_merge_sort_buff)
-BENCHMARK_TEMPLATE(serial_merge_sort_buff, int)->Range(1L << 10, 1L << 24)->Complexity();
+BENCHMARK_TEMPLATE(serial_merge_sort_buff, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 MY_BM(tbb_merge_sort)
-BENCHMARK_TEMPLATE(tbb_merge_sort, int)->Range(1L << 10, 1L << 24)->Complexity();
+BENCHMARK_TEMPLATE(tbb_merge_sort, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 BENCHMARK_MAIN();
