@@ -1,5 +1,6 @@
 #include "serial.hpp"
 #include "parallel.hpp"
+
 #include <benchmark/benchmark.h>
 #include <algorithm>
 #include <random>
@@ -18,7 +19,7 @@ template<class Containter, typename... Params>
 void randomize(Containter& c, Params... params)
 {
 	using T = typename Containter::value_type;
-	
+
 	std::mt19937 gen;
 	std::conditional_t<std::is_integral_v<T>,
 		std::uniform_int_distribution<T>,

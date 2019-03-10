@@ -22,3 +22,6 @@ target_link_libraries(heap_sort benchmark)
 
 add_executable(merge_sort src/merge_sort/merge_sort.cpp)
 target_link_libraries(merge_sort benchmark tbb pthread)
+
+add_executable(matrix_row_max_1s src/matrix_row_max_1s/matrix_row_max_1s.cpp)
+target_link_libraries(matrix_row_max_1s benchmark)
