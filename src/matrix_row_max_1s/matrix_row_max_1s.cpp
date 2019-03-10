@@ -1,6 +1,6 @@
 #include <benchmark/benchmark.h>
 #include <algorithm>
-#include <iostream>
+#include <cstddef>
 #include <random>
 #include <vector>
 
@@ -83,12 +83,8 @@ std::size_t row_with_max_number_of_1s_v2(const std::vector<T>& mat, std::size_t 
 		if (first[cols - max_n - 1] == 0)
 			continue;
 
-		auto it = first + cols - max_n;
-		while (it != first && *(it - 1) == 1)
-		{
+		for (auto it = first + cols - max_n; it != first && *(it - 1) == 1; --it)
 			++max_n;
-			--it;
-		}
 
 		if (max_n == cols)
 			return row;
@@ -116,19 +112,19 @@ static void CustomArguments(benchmark::internal::Benchmark* b)
 		randomize(vec, n, state.range(1));                                                         \
 		for (auto _ : state)                                                                       \
 		{                                                                                          \
-			auto row = func(vec, n);                                                               \
+			auto row = row_with_max_number_of_1s_##func(vec, n);                                   \
 			benchmark::DoNotOptimize(row);                                                         \
 		}                                                                                          \
 		state.SetComplexityN(state.range(0));                                                      \
 	}
 
-MY_BM(row_with_max_number_of_1s_v0)
-BENCHMARK(row_with_max_number_of_1s_v0)->Apply(CustomArguments);
+MY_BM(v0)
+BENCHMARK(v0)->Apply(CustomArguments);
 
-MY_BM(row_with_max_number_of_1s_v1)
-BENCHMARK(row_with_max_number_of_1s_v1)->Apply(CustomArguments);
+MY_BM(v1)
+BENCHMARK(v1)->Apply(CustomArguments);
 
-MY_BM(row_with_max_number_of_1s_v2)
-BENCHMARK(row_with_max_number_of_1s_v2)->Apply(CustomArguments);
+MY_BM(v2)
+BENCHMARK(v2)->Apply(CustomArguments);
 
 BENCHMARK_MAIN();

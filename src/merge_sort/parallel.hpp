@@ -1,5 +1,6 @@
 #pragma once
 #include "serial.hpp"
+
 #include <tbb/tbb.h>
 #include <algorithm>
 
