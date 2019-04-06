@@ -4,33 +4,36 @@
 #include <algorithm>
 #include <cstddef>
 #include <functional>
+#include <iterator>
 #include <random>
-#include <type_traits>
 #include <vector>
 
-template<class Containter, typename... Params>
-void randomize(Containter& c, Params... params)
+std::mt19937 gen;
+
+template<class It>
+void randomize(It first, It last)
 {
-	using T = typename Containter::value_type;
-	
-	std::mt19937 gen;
-	std::conditional_t<std::is_integral_v<T>,
-		std::uniform_int_distribution<T>,
-		std::uniform_real_distribution<T>> dis{static_cast<T>(params)...};
-	std::generate(c.begin(), c.end(), [&]() { return dis(gen); });
+	using T = typename std::iterator_traits<It>::value_type;
+
+	std::uniform_int_distribution<T> dis;
+	std::generate(first, last, [&]() { return dis(gen); });
 }
 
 template<typename T>
-void std_quick_sort(benchmark::State &state)	
+void std_quick_sort(benchmark::State& state)
 {
 	std::vector<T> vec(state.range(0));
 	for (auto _ : state)
 	{
 		state.PauseTiming();
-		randomize(vec);	
+		randomize(vec.begin(), vec.end());
 		state.ResumeTiming();
 		std::sort(vec.begin(), vec.end());
-		benchmark::DoNotOptimize(vec);
+		state.PauseTiming();
+		const bool f = std::is_sorted(vec.begin(), vec.end());
+		if (!f)
+			state.SkipWithError("Failed!");
+		state.ResumeTiming();
 	}
 	state.SetItemsProcessed((int64_t)state.range(0) * state.iterations());
 	state.SetComplexityN(state.range(0));
@@ -39,16 +42,20 @@ void std_quick_sort(benchmark::State &state)
 BENCHMARK_TEMPLATE(std_quick_sort, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 template<typename T>
-void std_heap_sort(benchmark::State &state)	
+void std_heap_sort(benchmark::State& state)
 {
 	std::vector<T> vec(state.range(0));
 	for (auto _ : state)
 	{
 		state.PauseTiming();
-		randomize(vec);	
+		randomize(vec.begin(), vec.end());
 		state.ResumeTiming();
 		std::partial_sort(vec.begin(), vec.end(), vec.end());
-		benchmark::DoNotOptimize(vec);
+		state.PauseTiming();
+		const bool f = std::is_sorted(vec.begin(), vec.end());
+		if (!f)
+			state.SkipWithError("Failed!");
+		state.ResumeTiming();
 	}
 	state.SetItemsProcessed((int64_t)state.range(0) * state.iterations());
 	state.SetComplexityN(state.range(0));
@@ -57,17 +64,21 @@ void std_heap_sort(benchmark::State &state)
 BENCHMARK_TEMPLATE(std_heap_sort, int)->Range(1L << 10, 1L << 24)->Complexity(benchmark::oNLogN);
 
 template<typename T>
-void heap_sort(benchmark::State &state)	
+void heap_sort(benchmark::State& state)
 {
 	std::vector<T> vec(state.range(0));
 	for (auto _ : state)
 	{
 		state.PauseTiming();
-		randomize(vec);	
+		randomize(vec.begin(), vec.end());
 		state.ResumeTiming();
 		Binary_heap<T, std::greater<T>> heap(std::move(vec));
 		vec = heap.extract_sorted();
-		benchmark::DoNotOptimize(vec);
+		state.PauseTiming();
+		const bool f = std::is_sorted(vec.begin(), vec.end());
+		if (!f)
+			state.SkipWithError("Failed!");
+		state.ResumeTiming();
 	}
 	state.SetItemsProcessed((int64_t)state.range(0) * state.iterations());
 	state.SetComplexityN(state.range(0));
