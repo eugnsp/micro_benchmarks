@@ -5,7 +5,7 @@
 #include <cstddef>
 
 using T = int;
-constexpr auto no_false_sharing = 0u;
+constexpr auto no_false_sharing = 1u;
 
 #define MY_BENCHMARK(func)                                                                         \
 	void func(benchmark::State& state)                                                             \

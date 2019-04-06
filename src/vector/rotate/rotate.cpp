@@ -16,7 +16,7 @@ It random_it(const It first, const It last)
 	return first + dis(gen);
 }
 
-#define MY_BM(func)                                                                                \
+#define MY_BENCHMARK(func)                                                                         \
 	template<typename T>                                                                           \
 	void func(benchmark::State& state)                                                             \
 	{                                                                                              \
@@ -29,30 +29,20 @@ It random_it(const It first, const It last)
 			benchmark::DoNotOptimize(vec);                                                         \
 		}                                                                                          \
 		state.SetComplexityN(state.range(0));                                                      \
-	}
+	}                                                                                              \
+                                                                                                   \
+	BENCHMARK_TEMPLATE(func, int)                                                                  \
+		->RangeMultiplier(2)                                                                       \
+		->Range(1L << 5, 1L << 26)                                                                 \
+		->Complexity(benchmark::oN);
 
-MY_BM(std_rotate)
-BENCHMARK_TEMPLATE(std_rotate, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(dolphin_rotate_1)
-BENCHMARK_TEMPLATE(dolphin_rotate_1, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(dolphin_rotate_2)
-BENCHMARK_TEMPLATE(dolphin_rotate_2, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(three_reverses_rotate)
-BENCHMARK_TEMPLATE(three_reverses_rotate, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(gries_mills_rotate_1)
-BENCHMARK_TEMPLATE(gries_mills_rotate_1, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(gries_mills_rotate_2)
-BENCHMARK_TEMPLATE(gries_mills_rotate_2, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(buffer_rotate_1)
-BENCHMARK_TEMPLATE(buffer_rotate_1, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
-
-MY_BM(buffer_rotate_2)
-BENCHMARK_TEMPLATE(buffer_rotate_2, int)->Range(1L << 5, 1L << 27)->Complexity(benchmark::oN);
+MY_BENCHMARK(std_rotate)
+MY_BENCHMARK(dolphin_rotate_1)
+MY_BENCHMARK(dolphin_rotate_2)
+MY_BENCHMARK(three_reverses_rotate)
+MY_BENCHMARK(gries_mills_rotate_1)
+MY_BENCHMARK(gries_mills_rotate_2)
+MY_BENCHMARK(buffer_rotate_1)
+MY_BENCHMARK(buffer_rotate_2)
 
 BENCHMARK_MAIN();
