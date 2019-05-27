@@ -24,13 +24,9 @@ void cycle_rotate(Matrix<T>& matrix)
 	const auto n = matrix.rows();
 	const auto n_cyclces = n / 2;
 
-	for (std::size_t i = 0; i < n_cyclces; ++i)
-		for (std::size_t j = 0; j < n - 1 - 2 * i; ++j)
-		{
-			const auto k = i + j;
-			rotate(matrix(i, k), matrix(k, n - 1 - i),
-				matrix(n - 1 - i, n - 1 - k), matrix(n - 1 - k, i));
-		}
+	for (std::size_t i = 0, i2 = n - 1; i < n_cyclces; ++i, --i2)
+		for (std::size_t j = i, j2 = n - 1 - i; j < n - 1 - i; ++j, --j2)
+			rotate(matrix(i, j), matrix(j, i2),	matrix(i2, j2), matrix(j2, i));
 }
 
 template<typename T>
