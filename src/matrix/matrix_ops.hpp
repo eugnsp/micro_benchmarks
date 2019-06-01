@@ -1,5 +1,6 @@
 #pragma once
 #include "matrix.hpp"
+
 #include <cassert>
 #include <cstddef>
 #include <utility>

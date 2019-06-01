@@ -11,21 +11,18 @@ class Binary_heap
 {
 public:
 	Binary_heap() = default;
-	
-	Binary_heap(std::initializer_list<T> list) :
-		heap_(list.begin(), list.end())
+
+	Binary_heap(std::initializer_list<T> list) : heap_(list.begin(), list.end())
 	{
 		build_heap();
 	}
 
-	Binary_heap(const std::vector<T>& values) :
-		heap_(values)
+	Binary_heap(const std::vector<T>& values) : heap_(values)
 	{
 		build_heap();
 	}
 
-	Binary_heap(std::vector<T>&& values) :
-		heap_(std::move(values))
+	Binary_heap(std::vector<T>&& values) : heap_(std::move(values))
 	{
 		build_heap();
 	}
@@ -41,13 +38,13 @@ public:
 	}
 
 	T& min()
-	{ 
+	{
 		assert(!is_empty());
 		return heap_.front();
 	}
 
 	const T& min() const
-	{ 
+	{
 		assert(!is_empty());
 		return heap_.front();
 	}
@@ -64,7 +61,7 @@ public:
 	std::vector<T> extract_sorted()
 	{
 		using std::swap;
-		
+
 		for (auto s = size() - 1; s > 0; --s)
 		{
 			swap(heap_.front(), heap_[s]);
@@ -85,7 +82,7 @@ public:
 		heap_.push_back(std::move(value));
 		sift_up(size() - 1);
 	}
-	
+
 	auto& heap() const
 	{
 		return heap_;
@@ -98,8 +95,8 @@ private:
 		return (index - 1) / 2;
 	}
 
- 	static std::size_t left_child_idx(std::size_t index)
- 	{ 
+	static std::size_t left_child_idx(std::size_t index)
+	{
 		return 2 * index + 1;
 	}
 
@@ -108,7 +105,7 @@ private:
 		if (size() < 2)
 			return;
 
-		const auto first_leaf_idx = size() / 2;		
+		const auto first_leaf_idx = size() / 2;
 		auto s = first_leaf_idx;
 
 		do
@@ -119,7 +116,7 @@ private:
 	void sift_up(std::size_t index)
 	{
 		assert(index < size());
-		
+
 		auto value = std::move(heap_[index]);
 		while (index > 0)
 		{
@@ -135,7 +132,7 @@ private:
 	}
 
 	void sift_down(std::size_t index)
-	{	
+	{
 		sift_down(index, size());
 	}
 
@@ -144,7 +141,7 @@ private:
 	{
 		assert(size <= this->size());
 
-		auto value = std::move(heap_[index]);		
+		auto value = std::move(heap_[index]);
 		while (true)
 		{
 			auto child = left_child_idx(index);

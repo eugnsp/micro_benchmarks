@@ -1,6 +1,6 @@
 #include "rotate.hpp"
-#include <benchmark/benchmark.h>
 #include <algorithm>
+#include <benchmark/benchmark.h>
 #include <cstddef>
 #include <iterator>
 #include <numeric>
@@ -16,25 +16,22 @@ It random_it(const It first, const It last)
 	return first + dis(gen);
 }
 
-#define MY_BENCHMARK(func)                                                                         \
-	template<typename T>                                                                           \
-	void func(benchmark::State& state)                                                             \
-	{                                                                                              \
-		std::vector<T> vec(state.range(0));                                                        \
-		std::iota(vec.begin(), vec.end(), T(0));                                                   \
-		for (auto _ : state)                                                                       \
-		{                                                                                          \
-			const auto n_first = random_it(vec.begin(), vec.end());                                \
-			func(vec.begin(), n_first, vec.end());                                                 \
-			benchmark::DoNotOptimize(vec);                                                         \
-		}                                                                                          \
-		state.SetComplexityN(state.range(0));                                                      \
-	}                                                                                              \
-                                                                                                   \
-	BENCHMARK_TEMPLATE(func, int)                                                                  \
-		->RangeMultiplier(2)                                                                       \
-		->Range(1L << 5, 1L << 26)                                                                 \
-		->Complexity(benchmark::oN);
+#define MY_BENCHMARK(func)                                                                                             \
+	template<typename T>                                                                                               \
+	void func(benchmark::State& state)                                                                                 \
+	{                                                                                                                  \
+		std::vector<T> vec(state.range(0));                                                                            \
+		std::iota(vec.begin(), vec.end(), T(0));                                                                       \
+		for (auto _ : state)                                                                                           \
+		{                                                                                                              \
+			const auto n_first = random_it(vec.begin(), vec.end());                                                    \
+			func(vec.begin(), n_first, vec.end());                                                                     \
+			benchmark::DoNotOptimize(vec);                                                                             \
+		}                                                                                                              \
+		state.SetComplexityN(state.range(0));                                                                          \
+	}                                                                                                                  \
+                                                                                                                       \
+	BENCHMARK_TEMPLATE(func, int)->RangeMultiplier(2)->Range(1L << 5, 1L << 26)->Complexity(benchmark::oN);
 
 MY_BENCHMARK(std_rotate)
 MY_BENCHMARK(dolphin_rotate_1)

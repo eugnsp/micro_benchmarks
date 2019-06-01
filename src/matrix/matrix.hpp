@@ -1,8 +1,8 @@
 #pragma once
 #include <cassert>
 #include <cstddef>
-#include <vector>
 #include <utility>
+#include <vector>
 
 template<typename T>
 class Matrix
@@ -11,8 +11,7 @@ public:
 	Matrix(std::size_t rows, std::size_t cols) : data_(rows * cols), rows_(rows), cols_(cols)
 	{}
 
-	Matrix(std::size_t rows, std::size_t cols, const T& value) :
-		data_(rows * cols, value), rows_(rows), cols_(cols)
+	Matrix(std::size_t rows, std::size_t cols, const T& value) : data_(rows * cols, value), rows_(rows), cols_(cols)
 	{}
 
 	T& operator()(std::size_t row, std::size_t col)
@@ -42,9 +41,19 @@ public:
 		return rows_ * cols_;
 	}
 
-	auto& data()
+	auto& vec()
 	{
 		return data_;
+	}
+
+	auto data()
+	{
+		return data_.data();
+	}
+
+	auto data() const
+	{
+		return data_.data();
 	}
 
 	void swap(Matrix& other)

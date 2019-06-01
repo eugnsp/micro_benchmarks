@@ -1,7 +1,7 @@
 #include "binary_heap.hpp"
 
-#include <benchmark/benchmark.h>
 #include <algorithm>
+#include <benchmark/benchmark.h>
 #include <cstddef>
 #include <functional>
 #include <iterator>

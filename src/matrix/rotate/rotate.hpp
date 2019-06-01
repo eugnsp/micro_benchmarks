@@ -1,11 +1,13 @@
 #pragma once
 #include "../matrix.hpp"
 #include "../matrix_ops.hpp"
+
 #include <benchmark/benchmark.h>
+
 #include <cassert>
 #include <cstddef>
-#include <vector>
 #include <utility>
+#include <vector>
 
 template<typename T>
 void rotate(T& v1, T& v2, T& v3, T& v4)
@@ -26,7 +28,7 @@ void cycle_rotate(Matrix<T>& matrix)
 
 	for (std::size_t i = 0, i2 = n - 1; i < n_cyclces; ++i, --i2)
 		for (std::size_t j = i, j2 = n - 1 - i; j < n - 1 - i; ++j, --j2)
-			rotate(matrix(i, j), matrix(j, i2),	matrix(i2, j2), matrix(j2, i));
+			rotate(matrix(i, j), matrix(j, i2), matrix(i2, j2), matrix(j2, i));
 }
 
 template<typename T>

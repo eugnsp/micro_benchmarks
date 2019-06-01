@@ -1,5 +1,5 @@
-#include <benchmark/benchmark.h>
 #include <algorithm>
+#include <benchmark/benchmark.h>
 #include <cstddef>
 #include <random>
 #include <vector>
@@ -68,22 +68,22 @@ std::size_t count_cycles_2(It first, It last)
 	return n - n_swaps;
 }
 
-#define MY_BM(func)                                                                                \
-	void func(benchmark::State& state)                                                             \
-	{                                                                                              \
-		std::vector<std::size_t> vec(state.range(0));                                              \
-		randomize(vec.begin(), vec.end());                                                         \
-		const auto n_cycles = count_cycles_0(vec.begin(), vec.end());                              \
-		for (auto _ : state)                                                                       \
-		{                                                                                          \
-			state.PauseTiming();                                                                   \
-			auto cpy = vec;                                                                        \
-			state.ResumeTiming();                                                                  \
-                                                                                                   \
-			const auto n = func(cpy.begin(), cpy.end());                                           \
-			if (n != n_cycles)                                                                     \
-				state.SkipWithError("Failed!");                                                    \
-		}                                                                                          \
+#define MY_BM(func)                                                                                                    \
+	void func(benchmark::State& state)                                                                                 \
+	{                                                                                                                  \
+		std::vector<std::size_t> vec(state.range(0));                                                                  \
+		randomize(vec.begin(), vec.end());                                                                             \
+		const auto n_cycles = count_cycles_0(vec.begin(), vec.end());                                                  \
+		for (auto _ : state)                                                                                           \
+		{                                                                                                              \
+			state.PauseTiming();                                                                                       \
+			auto cpy = vec;                                                                                            \
+			state.ResumeTiming();                                                                                      \
+                                                                                                                       \
+			const auto n = func(cpy.begin(), cpy.end());                                                               \
+			if (n != n_cycles)                                                                                         \
+				state.SkipWithError("Failed!");                                                                        \
+		}                                                                                                              \
 	}
 
 MY_BM(count_cycles_0)

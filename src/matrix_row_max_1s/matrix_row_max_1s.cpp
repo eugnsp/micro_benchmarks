@@ -1,5 +1,5 @@
-#include <benchmark/benchmark.h>
 #include <algorithm>
+#include <benchmark/benchmark.h>
 #include <cstddef>
 #include <random>
 #include <vector>
@@ -104,18 +104,18 @@ static void CustomArguments(benchmark::internal::Benchmark* b)
 	}
 }
 
-#define MY_BM(func)                                                                                \
-	void func(benchmark::State& state)                                                             \
-	{                                                                                              \
-		const auto n = state.range(0);                                                             \
-		std::vector<int> vec(n * n);                                                               \
-		randomize(vec, n, state.range(1));                                                         \
-		for (auto _ : state)                                                                       \
-		{                                                                                          \
-			auto row = row_with_max_number_of_1s_##func(vec, n);                                   \
-			benchmark::DoNotOptimize(row);                                                         \
-		}                                                                                          \
-		state.SetComplexityN(state.range(0));                                                      \
+#define MY_BM(func)                                                                                                    \
+	void func(benchmark::State& state)                                                                                 \
+	{                                                                                                                  \
+		const auto n = state.range(0);                                                                                 \
+		std::vector<int> vec(n* n);                                                                                    \
+		randomize(vec, n, state.range(1));                                                                             \
+		for (auto _ : state)                                                                                           \
+		{                                                                                                              \
+			auto row = row_with_max_number_of_1s_##func(vec, n);                                                       \
+			benchmark::DoNotOptimize(row);                                                                             \
+		}                                                                                                              \
+		state.SetComplexityN(state.range(0));                                                                          \
 	}
 
 MY_BM(v0)

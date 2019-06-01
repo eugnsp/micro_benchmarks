@@ -1,7 +1,9 @@
 #include "../matrix.hpp"
 #include "../matrix_ops.hpp"
 #include "rotate.hpp"
+
 #include <gtest/gtest.h>
+
 #include <cassert>
 #include <cstddef>
 #include <numeric>
@@ -22,17 +24,17 @@ bool is_rotated(const Matrix<T>& mat1, const Matrix<T>& mat2)
 using T = int;
 constexpr std::size_t max_size = 32;
 
-#define MY_TEST(func)                                                                              \
-	TEST(rotate, func)                                                                             \
-	{                                                                                              \
-		for (std::size_t n = 1; n < max_size; ++n)                                                 \
-		{                                                                                          \
-			Matrix<T> mat(n, n);                                                                   \
-			std::iota(mat.data().begin(), mat.data().end(), 0);                                    \
-			auto mat1 = mat;                                                                       \
-			func(mat1);                                                                            \
-			EXPECT_TRUE(is_rotated(mat, mat1));                                                    \
-		}                                                                                          \
+#define MY_TEST(func)                                                                                                  \
+	TEST(rotate, func)                                                                                                 \
+	{                                                                                                                  \
+		for (std::size_t n = 1; n < max_size; ++n)                                                                     \
+		{                                                                                                              \
+			Matrix<T> mat(n, n);                                                                                       \
+			std::iota(mat.data(), mat.data() + mat.size(), 0);                                                         \
+			auto mat1 = mat;                                                                                           \
+			func(mat1);                                                                                                \
+			EXPECT_TRUE(is_rotated(mat, mat1));                                                                        \
+		}                                                                                                              \
 	}
 
 MY_TEST(cycle_rotate)
