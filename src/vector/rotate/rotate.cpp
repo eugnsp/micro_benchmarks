@@ -31,7 +31,7 @@ It random_it(const It first, const It last)
 		state.SetComplexityN(state.range(0));                                                                          \
 	}                                                                                                                  \
                                                                                                                        \
-	BENCHMARK_TEMPLATE(func, int)->RangeMultiplier(2)->Range(1L << 5, 1L << 26)->Complexity(benchmark::oN);
+	BENCHMARK_TEMPLATE(func, int)->RangeMultiplier(4)->Range(1L << 6, 1L << 26);
 
 MY_BENCHMARK(std_rotate)
 MY_BENCHMARK(dolphin_rotate_1)

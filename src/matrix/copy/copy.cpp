@@ -19,9 +19,10 @@ constexpr auto no_false_sharing = 1u;
 			func(from, to);                                                                                            \
 			benchmark::DoNotOptimize(to.data());                                                                       \
 		}                                                                                                              \
+		state.SetBytesProcessed(state.iterations() * from.size() * sizeof(double));                                    \
 	}                                                                                                                  \
                                                                                                                        \
-	BENCHMARK(func)->RangeMultiplier(2)->Range(1l << 5, 1l << 12);
+	BENCHMARK(func)->RangeMultiplier(2)->Range(1l << 5, 1l << 14);
 
 MY_BENCHMARK(copy)
 MY_BENCHMARK(copy_tr_write_contig)
