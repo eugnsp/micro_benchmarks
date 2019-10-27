@@ -1,14 +1,14 @@
 # Micro-benchmarks
 
-## Memory
+## Arrays
 
-# Memory reads/writes
+### [Sequential reads/writes](src/array/seq_read_write/)
 
-![Memory reads/writes](src/memory/read_write/read_write.png)
+![Sequential reads/writes](src/array/seq_read_write/read_write.png)
 
 ## Matrices
 
-### Matrix 90 deg rotation
+### [Matrix 90 deg rotation](src/matrix/rotate/)
 
 ![Matrix 90 deg rotation](src/matrix/rotate/rotate.png)
 
