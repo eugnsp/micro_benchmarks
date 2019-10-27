@@ -1,3 +1,3 @@
-# Memory read/write speed
+# Memory reads/writes
 
-![Memory read/write speed](read_write.png)
+![Memory reads/writes](read_write.png)

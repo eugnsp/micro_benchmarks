@@ -1,8 +1,18 @@
 # Micro-benchmarks
 
-Configuration 1: Intel(R) Core(TM) i7-4770 CP,
+## Memory
 
-## Arrays
+# Memory reads/writes
+
+![Memory reads/writes](src/memory/read_write/read_write.png)
+
+## Matrices
+
+### Matrix 90 deg rotation
+
+![Matrix 90 deg rotation](src/matrix/rotate/rotate.png)
+
+<!-- ## Arrays
 
 ### Rotation
 
@@ -64,4 +74,4 @@ Results for square matrices `N * N` (X) and `(N - 1) * (N - 1)` (X') of type `in
 | 2'049  |4'198'401   | ~16 M   | 1    | 1.17  | 2.11  | 1.07  | 1.69  | 2.53  |
 | 4'097  |16'785'409  | ~64 M   | 1    | 1.06  | 2.31  | 1.47  | 1.80  | 2.50  |
 | 8'193  |67'125'249  | ~256 M  | 1    | 1.04  | 2.06  | 1.26  | 1.63  | 2.29  |
-
+ -->
