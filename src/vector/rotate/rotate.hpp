@@ -132,7 +132,7 @@ void three_reverses_rotate(const It first, const It n_first, const It last)
 template<class It>
 void buffer_rotate_1(const It first, const It n_first, const It last)
 {
-	std::vector buff(n_first, last);
+	std::vector<typename std::iterator_traits<It>::value_type> buff(n_first, last);
 	std::copy_backward(first, n_first, last);
 	std::copy(buff.begin(), buff.end(), first);
 }
@@ -140,7 +140,7 @@ void buffer_rotate_1(const It first, const It n_first, const It last)
 template<class It>
 void buffer_rotate_2(const It first, const It n_first, const It last)
 {
-	std::vector buff(first, n_first);
+	std::vector<typename std::iterator_traits<It>::value_type> buff(first, n_first);
 	auto n_last = std::copy(n_first, last, first);
 	std::copy(buff.begin(), buff.end(), n_last);
 }
