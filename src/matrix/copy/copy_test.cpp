@@ -35,9 +35,9 @@ constexpr std::size_t max_size = 128;
 		}                                                                                                              \
 	}
 
-MY_TEST(copy_tr_write_contig)
-MY_TEST(copy_tr_read_contig)
-MY_TEST(copy_tr_mkl)
+MY_TEST(copy_transp_contig_write)
+MY_TEST(copy_transp_contig_read)
+MY_TEST(copy_transp_mkl)
 
 int main(int argc, char** argv)
 {

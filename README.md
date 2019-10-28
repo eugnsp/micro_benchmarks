@@ -1,12 +1,28 @@
 # Micro-benchmarks
 
+- Machine: Intel(R) Core(TM) i7-4770
+- Compiler: GCC 8.3.1, `-DNDEBUG -O3 -m64 -march=native`
+- MKL: 2019.0.5, sequential ILP64
+
+---
+
 ## Arrays
 
 ### [Sequential reads/writes](src/array/seq_read_write/)
 
 ![Sequential reads/writes](src/array/seq_read_write/read_write.png)
 
+### [Reverse](src/array/reverse/)
+
+![Reverse](src/array/reverse/reverse.png)
+
+---
+
 ## Matrices
+
+### [Matrix copy with transposition](src/matrix/copy/)
+
+![Matrix copy with transposition](src/matrix/copy/copy.png)
 
 ### [Matrix 90 deg rotation](src/matrix/rotate/)
 
